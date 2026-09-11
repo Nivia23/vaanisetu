@@ -1,0 +1,235 @@
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
+import { useGame } from "@/context/GameContext";
+import { RAPID_FIRE_DATA, RapidQuestion } from "@/lib/data";
+import { Zap, Timer, Trophy, Flame, RotateCcw, Sparkles } from "lucide-react";
+
+export default function RapidFireGame() {
+  const { addXP, recordAnswer, playSound, triggerConfetti } = useGame();
+  
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+  const [questionIdx, setQuestionIdx] = useState(0);
+  const [isGameOver, setIsGameOver] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const currentQ: RapidQuestion = RAPID_FIRE_DATA[questionIdx % RAPID_FIRE_DATA.length];
+
+  const startGame = () => {
+    playSound("click");
+    setIsPlaying(true);
+    setIsGameOver(false);
+    setTimeLeft(30);
+    setScore(0);
+    setQuestionIdx(0);
+
+    if (timerRef.current) clearInterval(timerRef.current);
+
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current!);
+          endGame();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  const endGame = () => {
+    setIsPlaying(false);
+    setIsGameOver(true);
+    playSound("levelup");
+  };
+
+  useEffect(() => {
+    if (isGameOver) {
+      const earnedXP = score * 5;
+      if (score > 0) {
+        addXP(earnedXP);
+      }
+      if (score > highScore) {
+        setHighScore(score);
+        triggerConfetti();
+      }
+    }
+  }, [isGameOver, score]);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
+
+  const handleAnswer = (choiceIdx: number) => {
+    if (!isPlaying) return;
+
+    if (choiceIdx === currentQ.correctIndex) {
+      playSound("success");
+      setScore(prev => prev + 1);
+      recordAnswer(true);
+    } else {
+      playSound("error");
+      recordAnswer(false);
+    }
+
+    setQuestionIdx(prev => prev + 1);
+  };
+
+  return (
+    <div className="w-full max-w-2xl mx-auto space-y-6">
+      
+      {/* Top Banner */}
+      <div className="flex items-center justify-between bg-[#fffaf2] p-4 rounded-2xl border border-[#eadfca]">
+        <div className="flex items-center gap-2">
+          <Zap className="w-5 h-5 text-[#ff7043]" />
+          <div>
+            <span className="text-xs font-bold text-[#ff7043] uppercase tracking-wider">
+              Time Attack Challenge
+            </span>
+            <h3 className="text-base font-extrabold text-[#173f35]">
+              Rapid Fire Rush
+            </h3>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="flex items-center gap-1 text-xs font-bold bg-[#fff0d5] text-[#8a4c00] border border-[#ffcf70] px-3 py-1.5 rounded-full">
+            <Trophy className="w-3.5 h-3.5 text-amber-500" />
+            Best: {highScore} pts
+          </span>
+        </div>
+      </div>
+
+      {/* Main Game Box */}
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#eadfca] shadow-md text-center space-y-6">
+        
+        {!isPlaying && !isGameOver && (
+          <div className="py-8 space-y-6">
+            <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-[#ff7043] to-[#ffb703] flex items-center justify-center text-white shadow-lg animate-float">
+              <Zap className="w-10 h-10" />
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-2xl sm:text-3xl font-black text-[#173f35]">
+                Ready for 30 Seconds of Adrenaline?
+              </h3>
+              <p className="text-sm text-[#5e7068] max-w-md mx-auto font-medium">
+                Answer as many language and knowledge questions as you can before the clock strikes zero!
+              </p>
+            </div>
+
+            <button
+              onClick={startGame}
+              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-[#ff7043] hover:bg-[#e65100] text-white font-black text-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 transition-all"
+            >
+              <Zap className="w-5 h-5" />
+              <span>Start Rapid Fire (30s)</span>
+            </button>
+          </div>
+        )}
+
+        {/* ACTIVE PLAYING SCREEN */}
+        {isPlaying && (
+          <div className="space-y-6">
+            
+            {/* Timer & Live Score HUD */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Timer className={`w-6 h-6 ${timeLeft <= 5 ? "text-red-500 animate-ping" : "text-[#ff7043]"}`} />
+                <span className={`text-3xl font-black ${timeLeft <= 5 ? "text-red-600 animate-pulse" : "text-[#173f35]"}`}>
+                  {timeLeft}s
+                </span>
+              </div>
+
+              <div className="flex items-center gap-1.5 bg-[#fff0d5] px-4 py-2 rounded-2xl border border-[#ffcf70]">
+                <Flame className="w-5 h-5 text-[#ff7043] fill-[#ff7043]" />
+                <span className="text-xl font-black text-[#8a4c00]">{score}</span>
+                <span className="text-xs font-bold text-[#8a4c00]/70 uppercase">Score</span>
+              </div>
+            </div>
+
+            {/* Timer Progress Bar */}
+            <div className="w-full h-2.5 rounded-full bg-gray-100 overflow-hidden">
+              <div
+                className={`h-full rounded-full transition-all duration-1000 ${
+                  timeLeft <= 5 ? "bg-red-500" : "bg-gradient-to-r from-[#ffcf70] to-[#ff7043]"
+                }`}
+                style={{ width: `${(timeLeft / 30) * 100}%` }}
+              />
+            </div>
+
+            {/* Question Card */}
+            <div className="py-3">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-[#5e7068] block mb-2">
+                Question {questionIdx + 1}
+              </span>
+              <h4 className="text-xl sm:text-2xl font-black text-[#173f35] leading-snug">
+                {currentQ.question}
+              </h4>
+            </div>
+
+            {/* Answer Choices Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              {currentQ.options.map((opt, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handleAnswer(idx)}
+                  className="p-4 rounded-2xl bg-[#fffaf2] border-2 border-[#eadfca] hover:border-[#ff7043] hover:bg-[#fff0d5] text-[#173f35] font-black text-base shadow-xs hover:-translate-y-0.5 active:translate-y-0 transition-all text-center"
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+
+          </div>
+        )}
+
+        {/* GAME OVER RESULTS */}
+        {isGameOver && (
+          <div className="py-6 space-y-6 animate-fade-in">
+            <div className="p-8 rounded-3xl bg-gradient-to-br from-[#fff0d5] via-[#fffaf2] to-[#d9f3e9] border-2 border-[#ffcf70] space-y-4">
+              <div className="text-5xl">🏆</div>
+              <h3 className="text-3xl font-black text-[#155c48]">
+                Time&apos;s Up! Splendid Run!
+              </h3>
+              
+              <div className="flex items-center justify-center gap-6 py-2">
+                <div className="text-center">
+                  <span className="text-xs font-bold text-[#5e7068] uppercase">Total Score</span>
+                  <div className="text-3xl font-black text-[#173f35]">{score} pts</div>
+                </div>
+                <div className="w-px h-10 bg-[#eadfca]" />
+                <div className="text-center">
+                  <span className="text-xs font-bold text-[#5e7068] uppercase">Earned XP</span>
+                  <div className="text-3xl font-black text-[#ff7043]">+{score * 5} XP</div>
+                </div>
+              </div>
+
+              {score >= highScore && score > 0 && (
+                <div className="inline-flex items-center gap-1.5 bg-[#ff7043] text-white px-4 py-1.5 rounded-full text-xs font-extrabold shadow-sm animate-bounce">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>New Personal Best! 🎉</span>
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={startGame}
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-[#155c48] hover:bg-[#0f4234] text-white font-black text-base shadow-lg transition-all"
+            >
+              <RotateCcw className="w-5 h-5" />
+              <span>Play Again</span>
+            </button>
+          </div>
+        )}
+
+      </div>
+
+    </div>
+  );
+}
