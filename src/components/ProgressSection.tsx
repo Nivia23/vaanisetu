@@ -5,14 +5,10 @@ import { useGame } from "@/context/GameContext";
 import { BADGES_LIST } from "@/lib/data";
 import { 
   BarChart3, 
-  Award, 
-  Sparkles, 
   Flame, 
   Lock, 
   CheckCircle, 
   RotateCcw,
-  Target,
-  Zap,
   Share2
 } from "lucide-react";
 
@@ -22,7 +18,6 @@ export default function ProgressSection() {
     level, 
     streak, 
     correctAnswers, 
-    totalAttempts, 
     unlockedBadges, 
     resetProgress, 
     playSound, 
@@ -62,34 +57,35 @@ export default function ProgressSection() {
   };
 
   // Weekday streak bubbles
-  const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const daysOfWeek = ["M", "T", "W", "T", "F", "S", "S"];
+  const fullDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const currentDayIndex = (new Date().getDay() + 6) % 7; // 0=Mon, 6=Sun
 
   return (
-    <section id="progress" className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <section id="progress" className="py-8 sm:py-16 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 space-y-6 sm:space-y-10">
       
       {/* Section Header */}
-      <div className="text-center max-w-2xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-1.5 bg-[#ffe0a6] text-[#8a4c00] border border-[#ffcf70] px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider">
-          <BarChart3 className="w-4 h-4 text-[#ff7043]" />
+      <div className="text-center max-w-2xl mx-auto space-y-2 sm:space-y-3">
+        <div className="inline-flex items-center gap-1.5 bg-[#ffe0a6] text-[#8a4c00] border border-[#ffcf70] px-3 sm:px-4 py-1 sm:py-1.5 rounded-full font-bold text-xs uppercase tracking-wider">
+          <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#ff7043]" />
           <span>Your Learning Odyssey</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#173f35] tracking-tight">
-          Learning Progress & Achievements
+        <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[#173f35] tracking-tight">
+          Learning Progress & Badges
         </h2>
-        <p className="text-sm sm:text-base text-[#5e7068] font-medium">
+        <p className="text-xs sm:text-base text-[#5e7068] font-medium">
           Every word you master builds another pillar on your bridge to multilingual knowledge.
         </p>
       </div>
 
       {/* Main Progress Overview Card */}
-      <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#eadfca] shadow-xl space-y-8">
+      <div className="bg-white rounded-3xl p-4 sm:p-10 border border-[#eadfca] shadow-lg space-y-6 sm:space-y-8">
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
           
           {/* Circular Level Radial Hub */}
           <div className="lg:col-span-4 flex flex-col items-center justify-center text-center">
-            <div className="relative w-48 h-48 flex items-center justify-center">
+            <div className="relative w-36 h-36 sm:w-48 sm:h-48 flex items-center justify-center">
               
               {/* SVG Radial Gauge */}
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
@@ -118,28 +114,28 @@ export default function ProgressSection() {
 
               {/* Inner Center Level Counter */}
               <div className="absolute inset-0 flex flex-col items-center justify-center text-[#155c48]">
-                <span className="text-xs font-black uppercase tracking-widest text-[#5e7068]">Level</span>
-                <span className="text-5xl font-black">{level}</span>
-                <span className="text-[11px] font-bold text-[#ff7043] mt-0.5">{currentLevelXP}% complete</span>
+                <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#5e7068]">Level</span>
+                <span className="text-4xl sm:text-5xl font-black">{level}</span>
+                <span className="text-[10px] sm:text-[11px] font-bold text-[#ff7043] mt-0.5">{currentLevelXP}%</span>
               </div>
             </div>
 
-            <div className="mt-4 text-center">
-              <span className="text-sm font-black text-[#173f35] block">
-                {xpNeeded} XP to reach Level {level + 1}
+            <div className="mt-3 text-center">
+              <span className="text-xs sm:text-sm font-black text-[#173f35] block">
+                {xpNeeded} XP to Level {level + 1}
               </span>
-              <span className="text-xs text-[#5e7068]">
-                Total Experience: <strong className="text-[#ff7043]">{xp} XP</strong>
+              <span className="text-[11px] sm:text-xs text-[#5e7068]">
+                Total: <strong className="text-[#ff7043]">{xp} XP</strong>
               </span>
             </div>
           </div>
 
           {/* Right Column: Detailed Progress & Weekly Streaks */}
-          <div className="lg:col-span-8 space-y-6">
+          <div className="lg:col-span-8 space-y-4 sm:space-y-6">
             
-            <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center justify-between gap-2.5">
               <div>
-                <h3 className="text-2xl font-black text-[#155c48]">
+                <h3 className="text-lg sm:text-2xl font-black text-[#155c48]">
                   Keep Going! You&apos;re doing fantastic 🚀
                 </h3>
                 <p className="text-xs sm:text-sm font-medium text-[#5e7068]">
@@ -149,20 +145,20 @@ export default function ProgressSection() {
 
               <button
                 onClick={handleShare}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#fff0d5] text-[#8a4c00] border border-[#ffcf70] hover:bg-[#ffe0a6] text-xs font-bold transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#fff0d5] text-[#8a4c00] border border-[#ffcf70] hover:bg-[#ffe0a6] text-xs font-bold transition-colors"
               >
                 <Share2 className="w-3.5 h-3.5" />
-                <span>Share Milestones</span>
+                <span>Share</span>
               </button>
             </div>
 
             {/* Linear Progress Bar */}
-            <div className="space-y-1.5">
-              <div className="flex justify-between text-xs font-bold text-[#5e7068]">
+            <div className="space-y-1">
+              <div className="flex justify-between text-[11px] sm:text-xs font-bold text-[#5e7068]">
                 <span>Level {level} Milestone</span>
                 <span>Level {level + 1}</span>
               </div>
-              <div className="w-full h-3 rounded-full bg-gray-100 overflow-hidden p-0.5 border border-[#eadfca]">
+              <div className="w-full h-2.5 sm:h-3 rounded-full bg-gray-100 overflow-hidden p-0.5 border border-[#eadfca]">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-[#155c48] via-[#27916f] to-[#ff7043] transition-all duration-500"
                   style={{ width: `${Math.max(5, currentLevelXP)}%` }}
@@ -171,34 +167,37 @@ export default function ProgressSection() {
             </div>
 
             {/* Weekly Practice Tracker */}
-            <div className="bg-[#fffaf2] rounded-2xl p-4 border border-[#eadfca] space-y-2">
+            <div className="bg-[#fffaf2] rounded-2xl p-3 sm:p-4 border border-[#eadfca] space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold uppercase text-[#173f35] flex items-center gap-1.5">
-                  <Flame className="w-4 h-4 text-[#ff7043] fill-[#ff7043]" />
+                <span className="text-[11px] sm:text-xs font-extrabold uppercase text-[#173f35] flex items-center gap-1">
+                  <Flame className="w-3.5 h-3.5 text-[#ff7043] fill-[#ff7043]" />
                   <span>7-Day Active Habit Tracker</span>
                 </span>
-                <span className="text-xs font-bold text-[#ff7043]">
-                  {streak} Days Active Streak
+                <span className="text-[11px] sm:text-xs font-bold text-[#ff7043]">
+                  {streak} Days Active
                 </span>
               </div>
 
-              <div className="grid grid-cols-7 gap-2 pt-1">
-                {daysOfWeek.map((day, idx) => {
+              <div className="grid grid-cols-7 gap-1 sm:gap-2 pt-0.5">
+                {daysOfWeek.map((dayLetter, idx) => {
                   const isCurrent = idx === currentDayIndex;
                   const isCompletedDay = idx <= currentDayIndex && streak > (currentDayIndex - idx);
                   return (
                     <div
-                      key={day}
-                      className={`p-2 rounded-xl text-center border transition-all ${
+                      key={idx}
+                      className={`p-1.5 sm:p-2 rounded-lg sm:rounded-xl text-center border transition-all ${
                         isCompletedDay
-                          ? "bg-gradient-to-b from-[#ffcf70] to-[#ff7043] text-white border-transparent shadow-xs"
+                          ? "bg-gradient-to-b from-[#ffcf70] to-[#ff7043] text-white border-transparent shadow-2xs"
                           : isCurrent
                           ? "bg-white border-[#ff7043] text-[#ff7043] font-black"
                           : "bg-white border-[#eadfca] text-gray-400"
                       }`}
                     >
-                      <span className="text-[10px] uppercase font-bold block">{day}</span>
-                      <span className="text-xs font-black">
+                      <span className="text-[9px] sm:text-[10px] uppercase font-bold block">
+                        <span className="sm:hidden">{dayLetter}</span>
+                        <span className="hidden sm:inline">{fullDays[idx]}</span>
+                      </span>
+                      <span className="text-[10px] sm:text-xs font-black">
                         {isCompletedDay ? "✓" : isCurrent ? "•" : "—"}
                       </span>
                     </div>
@@ -212,23 +211,23 @@ export default function ProgressSection() {
         </div>
 
         {/* Badges & Achievements Shelf */}
-        <div className="space-y-4 pt-6 border-t border-[#eadfca]">
+        <div className="space-y-3 sm:space-y-4 pt-4 sm:pt-6 border-t border-[#eadfca]">
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="text-lg font-black text-[#173f35]">
+              <h4 className="text-base sm:text-lg font-black text-[#173f35]">
                 Unlocked Badges & Honors
               </h4>
-              <p className="text-xs text-[#5e7068] font-medium">
-                Tap unlocked badges for celebratory confetti!
+              <p className="text-[11px] sm:text-xs text-[#5e7068] font-medium">
+                Tap unlocked badges for confetti celebration!
               </p>
             </div>
 
-            <span className="text-xs font-bold bg-[#fff0d5] text-[#8a4c00] border border-[#ffcf70] px-3 py-1 rounded-full">
-              {unlockedBadges.length} of {BADGES_LIST.length} Unlocked
+            <span className="text-[10px] sm:text-xs font-bold bg-[#fff0d5] text-[#8a4c00] border border-[#ffcf70] px-2.5 py-0.5 sm:py-1 rounded-full">
+              {unlockedBadges.length}/{BADGES_LIST.length}
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-4">
             {BADGES_LIST.map((b) => {
               const isUnlocked = unlockedBadges.includes(b.id) || 
                 (b.type === "xp" && xp >= (b.thresholdXP || 0)) ||
@@ -239,32 +238,32 @@ export default function ProgressSection() {
                 <button
                   key={b.id}
                   onClick={() => handleBadgeClick(isUnlocked)}
-                  className={`p-4 rounded-2xl border text-center transition-all duration-200 flex flex-col items-center justify-between ${
+                  className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border text-center transition-all duration-200 flex flex-col items-center justify-between ${
                     isUnlocked
-                      ? "bg-gradient-to-b from-[#fff8e7] to-[#fff0d5] border-[#ffcf70] shadow-md hover:scale-105 hover:-translate-y-1 cursor-pointer"
-                      : "bg-gray-50/80 border-gray-200 opacity-50 grayscale cursor-not-allowed"
+                      ? "bg-gradient-to-b from-[#fff8e7] to-[#fff0d5] border-[#ffcf70] shadow-xs hover:scale-103 cursor-pointer"
+                      : "bg-gray-50/80 border-gray-200 opacity-40 grayscale cursor-not-allowed"
                   }`}
                 >
-                  <div className="text-3xl sm:text-4xl mb-2">
+                  <div className="text-2xl sm:text-4xl mb-1 sm:mb-2">
                     {b.icon}
                   </div>
                   <div>
-                    <h5 className="text-xs sm:text-sm font-black text-[#173f35] line-clamp-1">
+                    <h5 className="text-[11px] sm:text-sm font-black text-[#173f35] line-clamp-1">
                       {b.title}
                     </h5>
-                    <p className="text-[10px] text-[#5e7068] mt-0.5 line-clamp-2">
+                    <p className="text-[9px] sm:text-[10px] text-[#5e7068] mt-0.5 line-clamp-2">
                       {b.description}
                     </p>
                   </div>
 
-                  <div className="mt-2 text-[10px] font-bold">
+                  <div className="mt-1.5 text-[9px] sm:text-[10px] font-bold">
                     {isUnlocked ? (
                       <span className="text-emerald-700 flex items-center gap-0.5 justify-center">
-                        <CheckCircle className="w-3 h-3" /> Unlocked
+                        <CheckCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> Unlocked
                       </span>
                     ) : (
                       <span className="text-gray-400 flex items-center gap-0.5 justify-center">
-                        <Lock className="w-3 h-3" /> Locked
+                        <Lock className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> Locked
                       </span>
                     )}
                   </div>
@@ -275,12 +274,12 @@ export default function ProgressSection() {
         </div>
 
         {/* Footer actions inside card (Reset) */}
-        <div className="flex justify-end pt-4 border-t border-[#eadfca]/60">
+        <div className="flex justify-end pt-2 border-t border-[#eadfca]/60">
           <button
             onClick={handleReset}
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-400 hover:text-red-600 transition-colors"
+            className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-bold text-gray-400 hover:text-red-600 transition-colors"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
+            <RotateCcw className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             <span>Reset Progress Data</span>
           </button>
         </div>
