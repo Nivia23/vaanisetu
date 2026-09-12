@@ -111,7 +111,7 @@ VAANISETU aims to support **mother-tongue-based learning** and create a more eng
 
 Developed as a student project for **Smart India Hackathon (SIH) 2026**.
 
-### Team VAANISETU
+### VAANISETU
 
 Built with ❤️, curiosity, and a passion for technology and education.
 
