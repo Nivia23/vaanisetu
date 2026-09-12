@@ -7,7 +7,6 @@
 🌐 **Live Website:** https://vaanisetu-v2.vercel.app/
 
 ---
-
 ## ✨ About the Project
 
 Language should never be a barrier to learning.
