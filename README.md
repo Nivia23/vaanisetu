@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌿 VAANISETU
 
-## Getting Started
+### Where Language Meets Learning
 
-First, run the development server:
+**VAANISETU** is an AI-powered vernacular learning and translation platform designed to make primary education more accessible through **Indian regional and indigenous languages**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🌐 **Live Website:** https://vaanisetu-v2.vercel.app/
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ About the Project
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Language should never be a barrier to learning.
 
-## Learn More
+VAANISETU aims to bridge the gap between learners and educational content by providing a simple, interactive platform that supports multilingual learning and translation.
 
-To learn more about Next.js, take a look at the following resources:
+The platform combines **language translation, educational games, vocabulary building, pronunciation practice, and interactive learning activities** in one place.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🎯 Problem We Are Solving
 
-## Deploy on Vercel
+Many students, especially in linguistically diverse communities, face difficulties when educational content is available mainly in languages they are less familiar with.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+VAANISETU addresses this challenge by creating a digital learning environment where students can:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 🌐 Understand content in their preferred language
+- 🗣️ Explore regional and indigenous languages
+- 📚 Build vocabulary through interactive activities
+- 🔊 Practice pronunciation
+- 🎮 Learn through educational games
+- 🤝 Connect language with meaningful learning
+
+---
+
+## 🚀 Key Features
+
+### 🌍 Multilingual Translation
+Translate educational content between supported languages and regional/indigenous languages.
+
+### 📚 Interactive Learning
+Learn through:
+
+- Flashcards
+- Vocabulary
+- Pronunciation
+- Language lessons
+- Quizzes
+
+### 🎮 Learning Arcade
+
+VAANISETU includes interactive games such as:
+
+- 🃏 Flashcards
+- 🔤 Word Scramble
+- 🧩 Match
+- 🧠 Memory
+- ⚡ Rapid Fire
+- ❓ Quiz
+
+### ⭐ Gamification
+
+Students can stay motivated through:
+
+- XP points
+- Levels
+- Learning streaks
+- Badges
+- Interactive challenges
+
+---
+
+## 🗣️ Supported Languages
+
+VAANISETU currently explores multilingual learning across languages including:
+
+- 🇮🇳 Hindi
+- 🇮🇳 Bengali
+- 🇮🇳 Odia
+- 🇮🇳 Marathi
+- 🇮🇳 Santali
+- 🇮🇳 Tamil
+- 🇮🇳 Telugu
+- 🇬🇧 English
+
+---
+
+## 🛠️ Tech Stack
+
+- **Next.js**
+- **TypeScript**
+- **React**
+- **HTML5**
+- **CSS**
+- **JavaScript**
+- **Vercel**
+
+---
+
+## 💡 Vision
+
+> **"Where Language Meets Learning."**
+
+Our vision is to make digital education more inclusive by bringing learning closer to the languages and communities of India.
+
+VAANISETU aims to support **mother-tongue-based learning** and create a more engaging educational experience for young learners.
+
+---
+
+## 👩‍💻 Team
+
+Developed as a student project for **Smart India Hackathon (SIH) 2026**.
+
+### Team VAANISETU
+
+Built with ❤️, curiosity, and a passion for technology and education.
+
+---
+
+## 🌐 Live Demo
+
+👉 **Visit VAANISETU:**  
+https://vaanisetu-v2.vercel.app/
+
+---
+
+## 📌 Project Status
+
+🚧 **Currently under development**
+
+New features and improvements are being added as the project evolves.
+
+---
+
+## 📄 License
+
+This project is created for educational and hackathon purposes.
+
+
